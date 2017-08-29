@@ -8,13 +8,13 @@ import base64
 # get the general model
 # export CLARIFAI_API_KEY=f0bc502594a44e3986dd48ee7530aa22
 app = Flask(__name__)
-
+os.popen("export CLARIFAI_API_KEY=f0bc502594a44e3986dd48ee7530aa22")
 @app.route("/caption/<string>")
 def image_caption(string):
-    decoded_image = base64.b64decode(string)
+    image = base64.b64decode(string)
     app = ClarifaiApp(api_key='{api-key}')
     model = app.models.get("general-v1.3")
-    image = ClImage(file_obj=open(decoded_image, 'rb'))
+    #image = ClImage(file_obj=open(decoded_image, 'rb'))
     model.predict([image])
     print(os.popen("pwd").read())
     os.system("ls")
