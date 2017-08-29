@@ -9,7 +9,7 @@ import base64
 # export CLARIFAI_API_KEY=f0bc502594a44e3986dd48ee7530aa22
 app = Flask(__name__)
 os.popen("export CLARIFAI_API_KEY=f0bc502594a44e3986dd48ee7530aa22")
-@app.route("/caption/<string>")
+@app.route("/v1/caption/<string>",methods=["POST"])
 def image_caption(string):
     image = base64.b64decode(string)
     app = ClarifaiApp(api_key='{api-key}')
