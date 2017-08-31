@@ -1,5 +1,7 @@
 
 var jcrop, selection
+var hostname = 'http://textback2.herokuapp.com'
+var label_endpoint = '/v1/caption'
 
 var overlay = ((active) => (state) => {
   active = (typeof state === 'boolean') ? state : (state === null) ? active : !active
@@ -50,6 +52,21 @@ var init = (done) => {
   })
 }
 
+var get_labels = (image, success) => {
+  $.ajax({
+    url: hostname + label_endpoint,
+    type: 'POST',
+    data: image,
+    success: success
+  })
+  //$.post(hostname + label_endpoint, image, success);
+}
+
+var show_results = (res) => {
+  console.log(res);
+  console.log('draw new window here!');
+}
+
 var capture = (force) => {
   chrome.storage.sync.get((config) => {
     if (selection && (config.method === 'crop' || (config.method === 'wait' && force))) {
@@ -60,7 +77,7 @@ var capture = (force) => {
         }, (res) => {
           overlay(false)
           selection = null
-          save(res.image)
+          get_labels(res.image, show_results);
         })
       }, 50)
     }
@@ -70,7 +87,7 @@ var capture = (force) => {
         area: {x: 0, y: 0, w: innerWidth, h: innerHeight}, dpr: devicePixelRatio
       }, (res) => {
         overlay(false)
-        save(res.image)
+        get_labels(res.image, show_results);
       })
     }
   })

@@ -45,6 +45,7 @@
 
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "*://textback2.herokuapp.com/*"
   ]
 }
