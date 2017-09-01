@@ -11,7 +11,8 @@
     "default_title": "Take a screen shot!"
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "*://textback2.herokuapp.com/*"
   ],
   "manifest_version": 2
 }

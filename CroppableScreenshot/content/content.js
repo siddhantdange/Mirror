@@ -1,7 +1,7 @@
 
 var jcrop, selection
-var hostname = 'http://textback2.herokuapp.com'
-var label_endpoint = '/v1/caption'
+var hostname = 'https://textback2.herokuapp.com'
+var label_endpoint = '/v1/caption/'
 
 var overlay = ((active) => (state) => {
   active = (typeof state === 'boolean') ? state : (state === null) ? active : !active
@@ -53,13 +53,13 @@ var init = (done) => {
 }
 
 var get_labels = (image, success) => {
+  const cleanedImage = image.slice(image.indexOf('base64,') + 7);
   $.ajax({
     url: hostname + label_endpoint,
     type: 'POST',
-    data: image,
+    data: cleanedImage,
     success: success
-  })
-  //$.post(hostname + label_endpoint, image, success);
+  });
 }
 
 var show_results = (res) => {
